@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="TargetFloorLights" Id="{ba661fa8-f69e-421a-9cee-7d224a5ad71c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TargetFloorLights
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	r_i: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR r_i := 0 TO 10 DO
+	IF GVL_1.i_bCallButtons[r_i] THEN
+		GVL_1.q_bOpenDoor := TRUE;
+	END_IF
+END_FOR
+]]></ST>
+    </Implementation>
+    <LineIds Name="TargetFloorLights">
+      <LineId Id="16" Count="0" />
+      <LineId Id="32" Count="3" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MovementControl" Id="{8e74258b-1e98-45a7-803e-4b5412bfa5d3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MovementControl
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	r_reachedTarget : BOOL;
+	r_timer : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[r_reachedTarget := (GVL_1.i_iCurrentFloor = GVL_1.g_iTargetFloor);
+
+IF GVL_1.i_bDoorClosed THEN
+    IF NOT r_reachedTarget THEN
+        IF GVL_1.i_iCurrentFloor < GVL_1.g_iTargetFloor THEN
+            GVL_1.q_bMoveUp := TRUE;
+            GVL_1.q_bMoveDown := FALSE;
+            GVL_1.i_iCurrentFloor := GVL_1.i_iCurrentFloor + 1;
+        END_IF
+
+        IF GVL_1.i_iCurrentFloor > GVL_1.g_iTargetFloor THEN
+            GVL_1.q_bMoveUp := FALSE;
+            GVL_1.q_bMoveDown := TRUE;
+            GVL_1.i_iCurrentFloor := GVL_1.i_iCurrentFloor - 1;
+        END_IF
+    ELSE
+        GVL_1.q_bMoveUp := FALSE;
+        GVL_1.q_bMoveDown := FALSE;
+    END_IF
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="MovementControl">
+      <LineId Id="237" Count="1" />
+      <LineId Id="240" Count="1" />
+      <LineId Id="243" Count="5" />
+      <LineId Id="250" Count="5" />
+      <LineId Id="257" Count="3" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

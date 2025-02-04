@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="DoorSensors" Id="{9e4808e7-8ea8-415f-8fd8-6a43c03afe6b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK DoorSensors
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	r_doorCloseTimer : TON;
+	r_doorOpenError : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[r_doorOpenError := FALSE;
+
+IF NOT GVL_1.i_bDoorClosed THEN
+    r_doorCloseTimer(IN := TRUE, PT := T#5S);
+    
+    IF r_doorCloseTimer.Q THEN
+        r_doorOpenError := TRUE;
+		r_doorCloseTimer(IN := FALSE);
+    END_IF
+ELSE
+    r_doorCloseTimer(IN := FALSE);
+    r_doorOpenError := FALSE;
+END_IF
+IF r_doorOpenError THEN
+    GVL_1.q_bMoveUp := FALSE;
+    GVL_1.q_bMoveDown := FALSE;
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="DoorSensors">
+      <LineId Id="17" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="30" Count="2" />
+      <LineId Id="35" Count="3" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

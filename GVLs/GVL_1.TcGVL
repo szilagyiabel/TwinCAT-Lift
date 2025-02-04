@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GVL_1" Id="{a3321776-ab93-4c4d-b6bc-f91dd484ecec}">
+    <Declaration><![CDATA[VAR_GLOBAL
+    i_bCallButtons : ARRAY[0..10] OF BOOL;
+    i_bCallUp : ARRAY[1..9] OF BOOL;
+    i_bCallDown : ARRAY[1..9] OF BOOL;
+    i_bDoorClosed : BOOL;
+    i_bDoorOpen : BOOL;
+    i_iCurrentFloor : INT;
+
+    q_bMoveUp AT %Q* : BOOL;
+    q_bMoveDown AT %Q* : BOOL;
+    q_bOpenDoor AT %Q* : BOOL;
+    q_bCloseDoor AT %Q* : BOOL;
+    q_bCallAckUp AT %Q* : ARRAY[1..9] OF BOOL;
+    q_bCallAckDown AT %Q* : ARRAY[1..9] OF BOOL;
+
+    g_iTargetFloor : INT;
+    g_bDoorTimerActive : BOOL;
+    g_bCallRegisteredUp : ARRAY[1..9] OF BOOL;
+    g_bCallRegisteredDown : ARRAY[1..9] OF BOOL;
+    g_bMovingUp : BOOL;
+    g_bMovingDown : BOOL;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

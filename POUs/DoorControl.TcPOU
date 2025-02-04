@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="DoorControl" Id="{7e541a19-8749-4c57-8e90-e24ffb0f778c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK DoorControl
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	r_doorTimer : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//GVL_1.q_bOpenDoor := FALSE;
+//GVL_1.q_bCloseDoor := FALSE;
+
+IF GVL_1.i_iCurrentFloor = GVL_1.g_iTargetFloor THEN
+    GVL_1.q_bOpenDoor := TRUE;
+	GVL_1.q_bCloseDoor := FALSE;
+    r_doorTimer(IN := TRUE, PT := T#10S);
+ELSE
+    GVL_1.q_bCloseDoor := TRUE;
+	GVL_1.q_bOpenDoor := FALSE;
+    r_doorTimer(IN := FALSE);
+END_IF
+
+IF r_doorTimer.Q THEN
+    GVL_1.q_bOpenDoor := FALSE;
+    GVL_1.q_bCloseDoor := TRUE;
+	r_doorTimer(IN := FALSE);
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="DoorControl">
+      <LineId Id="80" Count="1" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="59" Count="2" />
+      <LineId Id="63" Count="2" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
